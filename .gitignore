@@ -2,6 +2,8 @@
 **/__pycache__/*
 **/~$*
 build/*
+dist/*
+*.egg-info/*
 .vscode
 .venv
 uv.lock
