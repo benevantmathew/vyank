@@ -1,0 +1,10 @@
+[project]
+name = "vyank"
+version = "0.1.0"
+description = "Video Downloader"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pytube>=15.0.0",
+    "pytubefix>=10.10.1",
+]

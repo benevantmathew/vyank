@@ -1,0 +1,8 @@
+# Include the JSON config file in the package
+include dircomply/application/extensions.json
+include dircomply/application/settings.json
+
+include README.md
+include CHANGELOG.md
+include LICENSE
+

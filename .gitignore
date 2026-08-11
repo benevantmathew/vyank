@@ -1,0 +1,8 @@
+# Compiled and generated things.
+**/__pycache__/*
+**/~$*
+build/*
+.vscode
+.venv
+uv.lock
+
