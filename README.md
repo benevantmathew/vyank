@@ -91,7 +91,7 @@ Use the General tab for one or more normal YouTube video URLs.
 4. Select the download mode:
    - `Video` downloads the highest available MP4 video stream and merges audio with FFmpeg.
    - `Audio` downloads audio only.
-   - `Video and Audio` is shown in the GUI as a shared mode option, but current download handling is focused on video or audio modes.
+   - `Video and Audio` downloads both outputs in one click: a merged video `.mp4` with audio and a separate audio-only `.m4a` file when yt-dlp selects m4a audio.
 5. Click `Download`.
 
 ### Playlist Tab
@@ -197,7 +197,7 @@ twine check dist/*
 Install the locally built wheel for testing:
 
 ```sh
-pip install --force-reinstall dist/vyank-0.1.1-py3-none-any.whl
+pip install --force-reinstall dist/vyank-0.2.0-py3-none-any.whl
 ```
 
 Run the installed command:
@@ -213,7 +213,7 @@ twine upload dist/*
 ## 📌 Package Metadata
 
 - Package name: `vyank`
-- Current version: `0.1.1`
+- Current version: `0.2.0`
 - Python requirement: `>=3.10`
 - License: MIT
 - Author: Benevant Mathew

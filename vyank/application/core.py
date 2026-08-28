@@ -133,11 +133,24 @@ class YTubeDownloader:
         stream.download(output_path=output_path)
         print("Download complete.")
 
-    def download_playlist(self, playlist_url, output_path=None, audio_only=False):
+    def download_video_and_audio(self, url, output_path=None):
+        """Download a merged MP4 video and a separate audio-only file."""
+        self.download_video_highest_resolution(url, output_path)
+        self.download_audio_only(url, output_path)
+
+    def download_playlist(self, playlist_url, output_path=None, audio_only=False, video_and_audio=False):
         if self.backend == "yt-dlp":
-            self._download_with_yt_dlp(
-                playlist_url, output_path, audio_only=audio_only, playlist=True
-            )
+            if video_and_audio:
+                self._download_with_yt_dlp(
+                    playlist_url, output_path, audio_only=False, playlist=True
+                )
+                self._download_with_yt_dlp(
+                    playlist_url, output_path, audio_only=True, playlist=True
+                )
+            else:
+                self._download_with_yt_dlp(
+                    playlist_url, output_path, audio_only=audio_only, playlist=True
+                )
             return
 
         pl = Playlist(playlist_url)
@@ -145,23 +158,35 @@ class YTubeDownloader:
         title_pl = sanitize_filename(title_pl)
         print(f"Downloading playlist with pytubefix: {title_pl}")
         for video in pl.videos:
-            if audio_only:
+            if video_and_audio:
+                self.download_video_and_audio(video.watch_url, output_path)
+            elif audio_only:
                 self.download_audio_only(video.watch_url, output_path)
             else:
                 self.download_video_highest_resolution(video.watch_url, output_path)
         print("Playlist download complete.")
 
-    def download_channel_videos(self, channel_url, output_path=None, audio_only=False):
+    def download_channel_videos(self, channel_url, output_path=None, audio_only=False, video_and_audio=False):
         if self.backend == "yt-dlp":
-            self._download_with_yt_dlp(
-                channel_url, output_path, audio_only=audio_only, playlist=True
-            )
+            if video_and_audio:
+                self._download_with_yt_dlp(
+                    channel_url, output_path, audio_only=False, playlist=True
+                )
+                self._download_with_yt_dlp(
+                    channel_url, output_path, audio_only=True, playlist=True
+                )
+            else:
+                self._download_with_yt_dlp(
+                    channel_url, output_path, audio_only=audio_only, playlist=True
+                )
             return
 
         c = Channel(channel_url)
         print(f"Downloading videos by pytubefix: {c.channel_name}")
         for video in c.videos:
-            if audio_only:
+            if video_and_audio:
+                self.download_video_and_audio(video.watch_url, output_path)
+            elif audio_only:
                 self.download_audio_only(video.watch_url, output_path)
             else:
                 self.download_video_highest_resolution(video.watch_url, output_path)

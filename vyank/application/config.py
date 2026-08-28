@@ -9,6 +9,6 @@ root_dir = os.path.join(current_dir, "..")
 
 class Config:
     USR_DIR = get_user_profile()
-    VERSION = "0.1.1"
+    VERSION = "0.2.0"
     DEFAULT_DOWNLOAD_FOLDER = os.path.join(USR_DIR, "Downloads")
     DEFAULT_DOWNLOADER_BACKEND = "yt-dlp"

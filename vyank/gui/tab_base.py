@@ -82,19 +82,32 @@ class TabBase:
         try:
             mode = self.download_mode.get()
             if isinstance(self, GeneralTab):
-                if mode in {"video", "video_audio"}:
-                    if ',' in self.input_string_urls:
-                        urls=self.input_string_urls.split(',')
-                        for url in urls:
-                            self.downloader.download_video_highest_resolution(url, self.output_folder)
-                    else:
-                        self.downloader.download_video_highest_resolution(self.input_string_urls, self.output_folder)
-                elif mode == "audio":
-                    self.downloader.download_audio_only(self.input_string_urls, self.output_folder)
+                if ',' in self.input_string_urls:
+                    urls = [url.strip() for url in self.input_string_urls.split(',') if url.strip()]
+                else:
+                    urls = [self.input_string_urls]
+
+                for url in urls:
+                    if mode == "video_audio":
+                        self.downloader.download_video_and_audio(url, self.output_folder)
+                    elif mode == "video":
+                        self.downloader.download_video_highest_resolution(url, self.output_folder)
+                    elif mode == "audio":
+                        self.downloader.download_audio_only(url, self.output_folder)
             elif isinstance(self, PlaylistTab):
-                self.downloader.download_playlist(self.input_string_urls, self.output_folder, audio_only=(mode == "audio"))
+                self.downloader.download_playlist(
+                    self.input_string_urls,
+                    self.output_folder,
+                    audio_only=(mode == "audio"),
+                    video_and_audio=(mode == "video_audio"),
+                )
             elif isinstance(self, ChannelTab):
-                self.downloader.download_channel_videos(self.input_string_urls, self.output_folder, audio_only=(mode == "audio"))
+                self.downloader.download_channel_videos(
+                    self.input_string_urls,
+                    self.output_folder,
+                    audio_only=(mode == "audio"),
+                    video_and_audio=(mode == "video_audio"),
+                )
 
             messagebox.showinfo("Success", "Download completed successfully!")
         except Exception as e:
