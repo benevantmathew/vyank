@@ -80,20 +80,21 @@ class TabBase:
 
         # Perform download based on mode and tab type
         try:
+            mode = self.download_mode.get()
             if isinstance(self, GeneralTab):
-                if self.download_mode.get() == "video":
+                if mode in {"video", "video_audio"}:
                     if ',' in self.input_string_urls:
                         urls=self.input_string_urls.split(',')
                         for url in urls:
                             self.downloader.download_video_highest_resolution(url, self.output_folder)
                     else:
                         self.downloader.download_video_highest_resolution(self.input_string_urls, self.output_folder)
-                elif self.download_mode.get() == "audio":
+                elif mode == "audio":
                     self.downloader.download_audio_only(self.input_string_urls, self.output_folder)
             elif isinstance(self, PlaylistTab):
-                self.downloader.download_playlist(self.input_string_urls, self.output_folder, audio_only=(self.download_mode.get() == "audio"))
+                self.downloader.download_playlist(self.input_string_urls, self.output_folder, audio_only=(mode == "audio"))
             elif isinstance(self, ChannelTab):
-                self.downloader.download_channel_videos(self.input_string_urls, self.output_folder)
+                self.downloader.download_channel_videos(self.input_string_urls, self.output_folder, audio_only=(mode == "audio"))
 
             messagebox.showinfo("Success", "Download completed successfully!")
         except Exception as e:

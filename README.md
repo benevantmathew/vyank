@@ -1,6 +1,6 @@
 # 🎬 vyank - YouTube Downloader
 
-`vyank` is a small Tkinter desktop tool for downloading YouTube videos, audio, playlists, and channel videos. It uses `pytubefix` for YouTube access and `ffmpeg` for merging separate high-resolution video and audio streams into a final MP4 file.
+`vyank` is a small Tkinter desktop tool for downloading YouTube videos, audio, playlists, and channel videos. It uses `yt-dlp` by default for reliable downloads, keeps `pytubefix` available as an alternate backend, and uses `ffmpeg` for merging separate high-resolution video and audio streams into a final MP4 file.
 
 ## ✅ Features
 
@@ -12,6 +12,9 @@
 - Download channel videos
 - Automatically sanitizes video titles for safe filenames
 - Downloads to the user `Downloads` folder by default
+- Uses `yt-dlp` as the default downloader backend
+- Keeps `pytubefix` as a selectable alternate backend
+- Top-of-window downloader engine selector: `yt-dlp` or `pytubefix`
 - Uses FFmpeg to merge adaptive video-only and audio-only streams
 - Packaged with a `vyank` console entry point for PyPI installation
 
@@ -19,7 +22,7 @@
 
 ### YouTube Terms
 
-Only download content that you own, are allowed to download, or are permitted to use under the content owner's terms. YouTube access behavior may change over time, so updating `pytubefix` may occasionally be required.
+Only download content that you own, are allowed to download, or are permitted to use under the content owner's terms. YouTube access behavior may change over time, so updating `yt-dlp` or `pytubefix` may occasionally be required.
 
 ### FFmpeg Requirement
 
@@ -68,6 +71,15 @@ If you use the included virtual environment during development:
 ```
 
 ## 🖥️ GUI Workflow
+
+### Downloader Engine
+
+At the top of the GUI, choose the download engine:
+
+- `yt-dlp` is the default and recommended backend.
+- `pytubefix` remains available as an alternate backend.
+
+Use `yt-dlp` first for normal downloads. Switch to `pytubefix` only if you specifically want the older backend behavior.
 
 ### General Tab
 
@@ -185,7 +197,7 @@ twine check dist/*
 Install the locally built wheel for testing:
 
 ```sh
-pip install --force-reinstall dist/vyank-0.1.0-py3-none-any.whl
+pip install --force-reinstall dist/vyank-0.1.1-py3-none-any.whl
 ```
 
 Run the installed command:
@@ -201,7 +213,7 @@ twine upload dist/*
 ## 📌 Package Metadata
 
 - Package name: `vyank`
-- Current version: `0.1.0`
+- Current version: `0.1.1`
 - Python requirement: `>=3.10`
 - License: MIT
 - Author: Benevant Mathew
@@ -213,6 +225,7 @@ twine upload dist/*
 
 Python packages:
 
+- `yt-dlp`
 - `pytubefix`
 
 System packages:
