@@ -53,6 +53,7 @@ class YTubeDownloader:
             "merge_output_format": "mp4",
             "noplaylist": not playlist,
             "windowsfilenames": True,
+            "restrictfilenames": True,
         }
 
     def _download_with_yt_dlp(self, url, output_path=None, audio_only=False, playlist=False):
